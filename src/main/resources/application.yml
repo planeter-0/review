@@ -2,10 +2,60 @@ server:
     port: 8091
 
 spring:
+    redis:
+        host: 47.115.200.30
+        port: 6379
+        jedis:
+            pool:
+                max-active: 8
+                max-wait: -1
+                max-idle: 100
+                min-idle: 0
+        timeout: 5000
+
+    mail:
+        host: smtp.126.com
+        port: 465
+        protocol: smtps
+        default-encoding: utf-8
+        username: planeter@126.com
+        password: AKFTIZMKULTWHNSD
+        properties:
+            from: planeter@126.com
+            mail:
+                smtp:
+                    starttls:
+                        enable: true
+                        required: true
+
+    main:
+        allow-bean-definition-overriding: true
+
     datasource:
-        url: jdbc:mysql://127.0.0.1:3306/ss?characterEncoding=utf-8&useSSL=false&autoReconnect=true&rewriteBatchedStatements=true&serverTimezone=UTC
+        type: com.alibaba.druid.pool.DruidDataSource
+        url: jdbc:mysql://47.115.200.30:3306/review?serverTimezone=GMT%2B8
         username: root
-        password: root
+        password: 1a2b3c4d+1S
+
+    jpa:
+        database: mysql
+        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+        show-sql: false
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                enable_lazy_load_no_trans: true
+                dialect: org.hibernate.dialect.MySQL57Dialect
+
+    jackson:
+        date-format: yyyy-MM-dd HH:mm:ss
+        time-zone: GMT+8
+logging:
+    level:
+        root: info
+    file:
+        path: ./logs
 security:
     jwt:
         secretKey: whatever

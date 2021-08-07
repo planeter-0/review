@@ -4,10 +4,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.persistence.Entity;
+
 /**
- * 用户自主上传的资源
+ * 资源
  */
 @Data
+@Entity
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class Resource extends BaseEntity{
@@ -20,7 +23,7 @@ public class Resource extends BaseEntity{
      */
     private String name;
     /**
-     * 类型。0为文本，1为图片
+     * 类型。0为控制器，1为接口
      */
     private Integer type;
 }

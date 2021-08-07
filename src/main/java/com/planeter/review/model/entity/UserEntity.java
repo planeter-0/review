@@ -6,9 +6,6 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
-/**
- * @author RudeCrab
- */
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
@@ -27,4 +24,8 @@ public class UserEntity extends BaseEntity implements Serializable {
      * 昵称
      */
     private String nickname;
+    /**
+     * 头像
+     */
+    private String icon;
 }

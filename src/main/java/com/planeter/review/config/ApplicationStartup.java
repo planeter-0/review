@@ -1,9 +1,9 @@
 package com.planeter.review.config;
 
 
-import com.planeter.review.annotation.Auth;
+import com.planeter.review.common.annotation.Auth;
 import com.planeter.review.model.entity.Resource;
-import com.planeter.review.security.MySecurityMetadataSource;
+import com.planeter.review.common.security.MySecurityMetadataSource;
 import com.planeter.review.service.ResourceService;
 import io.jsonwebtoken.lang.Collections;
 import org.springframework.beans.factory.annotation.Autowired;

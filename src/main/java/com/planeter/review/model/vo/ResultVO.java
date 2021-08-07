@@ -1,14 +1,11 @@
 package com.planeter.review.model.vo;
 
 
-import com.planeter.review.enums.ResultCode;
+import com.planeter.review.common.enums.ResultCode;
 import lombok.Getter;
 
 /**
- * 自定义统一响应体, 相关用法可以参考文章：
- * https://mp.weixin.qq.com/s?__biz=MzkzMjE3NTA3Mg==&mid=2247484586&idx=1&sn=88f39689a53a024d2a3cd1d6101ebd60
- *
- * @author RudeCrab
+ * 自定义统一响应体,
  */
 @Getter
 public class ResultVO<T> {

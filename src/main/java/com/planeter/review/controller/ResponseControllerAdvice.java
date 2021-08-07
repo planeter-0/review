@@ -3,7 +3,7 @@ package com.planeter.review.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.planeter.review.exception.ApiException;
+import com.planeter.review.common.exception.ApiException;
 import com.planeter.review.model.vo.ResultVO;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;

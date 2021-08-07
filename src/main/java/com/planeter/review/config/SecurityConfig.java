@@ -1,11 +1,7 @@
 package com.planeter.review.config;
 
-
-import com.planeter.review.security.AuthFilter;
-import com.planeter.review.security.LoginFilter;
-import com.planeter.review.security.MyDeniedHandler;
-import com.planeter.review.security.MyEntryPoint;
-import com.planeter.review.serviceimpl.UserServiceImpl;
+import com.planeter.review.common.security.UserDetail;
+import com.planeter.review.service.imp.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -21,12 +17,6 @@ import org.springframework.web.cors.CorsUtils;
 
 import javax.annotation.Resource;
 
-/**
- * @description: Spring Security配置类
- * @author Planeter
- * @date 2021/7/19 18:06
- * @status dev
- */
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Resource

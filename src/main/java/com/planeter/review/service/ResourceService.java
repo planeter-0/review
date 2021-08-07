@@ -8,6 +8,5 @@ import java.util.Set;
 
 public interface ResourceService {
     Set<Long> getIdsByUserId(Long id);
-
-    void insertResources(List<Resource> list);
+    List<Resource> getResourcesByUserId(Long userId);
 }
