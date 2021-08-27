@@ -15,8 +15,27 @@ public interface WordService {
      */
     WordGroup createGroup(Long userId, String bookId, Integer total);
 
+    /**
+     * 根据id获取词书背诵计划
+     * @param groupId
+     * @return
+     */
     WordGroup getGroupById(String groupId);
+
+    /**
+     * 根据单词序号列表和词书id获取单词列表
+     * @param wordRanks
+     * @param bookId
+     * @return
+     */
     List<Word> getWordListBywordRanksAndBookId(List<Integer> wordRanks,String bookId);
 
+    /**
+     * 更新词书背诵计划
+     * @param start
+     * @param groupId
+     * @param breaks
+     * @param unitIds
+     */
     void updateGroup(Integer start, String groupId,List<Integer> breaks,List<String> unitIds);
 }

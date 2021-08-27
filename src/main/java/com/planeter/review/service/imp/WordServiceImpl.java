@@ -4,6 +4,8 @@ import com.planeter.review.model.entity.ReviewUnit;
 import com.planeter.review.model.entity.Word;
 import com.planeter.review.model.entity.WordGroup;
 import com.planeter.review.service.WordService;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -25,6 +27,7 @@ public class WordServiceImpl implements WordService {
     MongoTemplate mongoTemplate;
 
     @Override
+    @CachePut(value = {"WordGroup"}, key = "#groupId")
     public WordGroup createGroup(Long userId, String bookId, Integer total) {
         WordGroup group = new WordGroup(userId,bookId);
         group.generateOrder(total);
@@ -32,18 +35,21 @@ public class WordServiceImpl implements WordService {
     }
 
     @Override
+    @Cacheable(value = {"WordGroup"}, key = "#groupId")
     public WordGroup getGroupById(String groupId) {
         Query query = new Query(Criteria.where("_id").is(groupId));
         return mongoTemplate.findOne(query,WordGroup.class,"wordGroup");
     }
 
     @Override
+    @Cacheable(value = {"WordGroup"}, keyGenerator = "myKeyGenerator")
     public List<Word> getWordListBywordRanksAndBookId(List<Integer> wordRanks,String bookId) {
         Query query = new Query(Criteria.where("bookId").is(bookId).and("wordRank").in(wordRanks));
         return mongoTemplate.find(query,Word.class,"word");
     }
 
     @Override
+    @CachePut(value = {"WordGroup"}, key = "#groupId")
     public void updateGroup(Integer start, String groupId,List<Integer> breaks,List<String> unitIds) {
         Query query = new Query(Criteria.where("_id").is(groupId));
         Update update = new Update();

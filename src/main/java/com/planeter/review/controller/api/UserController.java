@@ -45,6 +45,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResultVO<String> register(@RequestBody @Validated RegisterParam param) {
+        // 注册并创建计分板
         scoreBoardService.createScoreBoard(userService.register(param));
         return new ResultVO<>("注册成功");
     }
@@ -59,8 +60,7 @@ public class UserController {
         subject.login(new UsernamePasswordToken(username, password));
         user = (UserEntity) subject.getPrincipal();
         // 签发Jwt,存入Redis
-        String jwt = JwtUtils.sign(username, 3000);
-//        String jwt = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2Mjk5ODU2NTMsImlhdCI6MTYyOTk4MjY1MywidXNlcm5hbWUiOiIxNTUyNzA1Mjc2QHFxLmNvbSJ9.YYeWEeCYU-y9umM7fPQsbGIfJauESmjVKtn0K2Mam7Q";
+        String jwt = JwtUtils.sign(username, 9000);
         redisTemplate.opsForValue().set("Jwt-" + param.getUsername(), jwt, 9000, TimeUnit.SECONDS);
         // 设置token
         response.setHeader("Set-Token", jwt);

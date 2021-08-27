@@ -5,6 +5,10 @@ import com.planeter.review.model.param.LoginParam;
 import com.planeter.review.model.param.RegisterParam;
 
 public interface UserService {
+    /**
+     * 注册邮箱验证
+     * @param email
+     */
     void verifyEmail(String email);
 
     /**

@@ -28,8 +28,6 @@ import java.util.concurrent.TimeUnit;
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
-    @Value("${spring.mail.properties.from}")
-    private String sender;
     @Resource
     private UserRepository userRepository;
     @Resource
@@ -52,9 +50,9 @@ public class UserServiceImpl implements UserService {
         // 生成邮件
         String code = sb.toString();
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(sender);
+        message.setFrom("Memory Booster");
         message.setTo(email);
-        message.setSubject("Memory Booster");
+        message.setSubject("Memory Booster 注册邮箱验证");
         message.setText("验证码:" + code);
         // 发送邮件
         try {
@@ -77,8 +75,5 @@ public class UserServiceImpl implements UserService {
         user.setUsername(param.getUsername());
         user.setPassword(BCrypt.hashpw(param.getPassword(), BCrypt.gensalt()));
         return userRepository.save(user).getId();
-
     }
-
-
 }

@@ -8,6 +8,7 @@ import com.planeter.review.service.ReviewService;
 import com.planeter.review.service.ScoreBoardService;
 import org.apache.shiro.SecurityUtils;
 import org.bson.Document;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -47,6 +48,7 @@ public class ReviewController {
         return new ResultVO<>(reviewService.getById(id));
     }
     @GetMapping("/customUnit/mine")
+    @Cacheable(value = "unit",key="")
     public ResultVO getMyCustomUnit(@RequestParam(defaultValue="-1") Integer state){
         UserEntity user = (UserEntity) SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal();
         return new ResultVO<>(reviewService.getByUserIdAndState(user.getId(),state));

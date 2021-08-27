@@ -24,7 +24,7 @@ public interface ResourceService {
 
     /**
      * 根据类型删除资源
-     * @param type 资源类型，0为页面权限，1为操作权限
+     * @param type 资源类型，0为Controller权限，1为操作权限
      */
     void deleteResourceByType(int type);
 

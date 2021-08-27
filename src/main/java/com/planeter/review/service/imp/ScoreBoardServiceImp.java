@@ -3,6 +3,8 @@ package com.planeter.review.service.imp;
 import com.planeter.review.model.entity.ScoreBoard;
 import com.planeter.review.repository.ScoreBoardRepository;
 import com.planeter.review.service.ScoreBoardService;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,11 +18,13 @@ public class ScoreBoardServiceImp implements ScoreBoardService {
     ScoreBoardRepository scoreBoardRepository;
 
     @Override
+    @CachePut(value = {"ScoreBoard"}, key = "#userId")
     public void createScoreBoard(Long userId) {
         scoreBoardRepository.save(new ScoreBoard(userId));
     }
 
     @Override
+    @Cacheable(value = {"scoreBoard"}, key = "#userId")
     public ScoreBoard getScoreBoardByUserId(Long userId) {
         return scoreBoardRepository.getById(userId);
     }

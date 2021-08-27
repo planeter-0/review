@@ -25,7 +25,7 @@ public class ImageController {
     /**
      * 上传图片返回url
      *
-     * @param uploadFile
+     * @param uploadFile 上传的图片文件
      * @return url
      */
     @PostMapping(value = "/image/upload")

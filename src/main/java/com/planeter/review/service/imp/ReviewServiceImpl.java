@@ -3,6 +3,9 @@ package com.planeter.review.service.imp;
 import com.planeter.review.model.entity.ReviewUnit;
 import com.planeter.review.service.ReviewService;
 import com.planeter.review.service.ScoreBoardService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -24,17 +27,20 @@ public class ReviewServiceImpl implements ReviewService {
     MongoTemplate mongoTemplate;
 
     @Override
+    @CachePut(value = {"unit"}, key = "#id")
     public ReviewUnit createUnit(ReviewUnit reviewUnit) {
         return mongoTemplate.insert(reviewUnit,"unit");
     }
 
     @Override
+    @CacheEvict(value = {"unit"}, key = "#id")
     public void deleteUnit(String id) {
         Query query = new Query(Criteria.where("_id").is(id));
         mongoTemplate.remove(query,ReviewUnit.class,"unit");
     }
 
     @Override
+    @CachePut(value = {"unit"}, key = "#id")
     public void updateRecordById(String id,String record) {
         Query query = new Query(Criteria.where("_id").is(id));
         Update update = new Update();
@@ -45,12 +51,14 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @Cacheable(value = {"unit"}, key = "#id")
     public ReviewUnit getById(String id) {
         Query query = new Query(Criteria.where("_id").is(id));
         return mongoTemplate.findOne(query,ReviewUnit.class);
     }
 
     @Override
+    @Cacheable(value = {"myUnit"}, key = "#userId+'_'+#state")
     public List<ReviewUnit> getByUserIdAndState(Long userId,Integer state) {
         Query query = new Query();
         if(state==-1) {
