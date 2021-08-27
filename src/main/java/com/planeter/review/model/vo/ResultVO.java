@@ -22,10 +22,17 @@ public class ResultVO<T> {
      */
     private T data;
 
+    public ResultVO() {
+        this(ResultCode.SUCCESS);
+    }
+
     public ResultVO(T data) {
         this(ResultCode.SUCCESS, data);
     }
-
+    public ResultVO(ResultCode resultCode) {
+        this.code = resultCode.getCode();
+        this.msg = resultCode.getMsg();
+    }
     public ResultVO(ResultCode resultCode, T data) {
         this.code = resultCode.getCode();
         this.msg = resultCode.getMsg();

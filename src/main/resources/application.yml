@@ -1,17 +1,26 @@
 server:
-    port: 8091
+    port: 8088
 
 spring:
+    data:
+      mongodb:
+          uri: mongodb://planeter:1045170370@47.115.200.30:27017/review
+    datasource:
+        type: com.alibaba.druid.pool.DruidDataSource
+        url: jdbc:mysql://47.115.200.30:3306/review?serverTimezone=GMT%2B8
+        username: planeter
+        password: 1a2b3c4d+1S
     redis:
         host: 47.115.200.30
         port: 6379
+        password: 6lMJz*6KPBVj%uyQmKMj$$R%Zd83$6V!
+        timeout: 5000
         jedis:
             pool:
-                max-active: 8
-                max-wait: -1
-                max-idle: 100
-                min-idle: 0
-        timeout: 5000
+                max-active: 1000
+                max-wait: 1000ms
+                max-idle: 10
+                min-idle: 1
 
     mail:
         host: smtp.126.com
@@ -31,11 +40,7 @@ spring:
     main:
         allow-bean-definition-overriding: true
 
-    datasource:
-        type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mysql://47.115.200.30:3306/review?serverTimezone=GMT%2B8
-        username: root
-        password: 1a2b3c4d+1S
+
 
     jpa:
         database: mysql
@@ -58,4 +63,4 @@ logging:
         path: ./logs
 security:
     jwt:
-        secretKey: whatever
+        salt: HelloWorld

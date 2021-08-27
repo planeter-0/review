@@ -7,7 +7,6 @@ import java.lang.annotation.Target;
 
 /**
  * 权限注解，用于标识需要权限处理的接口
- *
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})

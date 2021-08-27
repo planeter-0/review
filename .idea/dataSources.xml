@@ -7,5 +7,11 @@
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://47.115.200.30:3306/review</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="review@47.115.200.30 [2]" uuid="3bca5c31-3059-4c6e-b70b-636a098f9abf">
+      <driver-ref>mongo</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
+      <jdbc-url>mongodb://47.115.200.30:27017/review</jdbc-url>
+    </data-source>
   </component>
 </project>

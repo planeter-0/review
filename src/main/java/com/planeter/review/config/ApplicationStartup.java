@@ -3,13 +3,12 @@ package com.planeter.review.config;
 
 import com.planeter.review.common.annotation.Auth;
 import com.planeter.review.model.entity.Resource;
-import com.planeter.review.common.security.MySecurityMetadataSource;
 import com.planeter.review.service.ResourceService;
-import io.jsonwebtoken.lang.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
@@ -58,10 +57,10 @@ public class ApplicationStartup implements ApplicationRunner {
             String path = methods.toArray()[0] + ":" + info.getPatternsCondition().getPatterns().toArray()[0];
             // 将权限名、资源路径、资源类型组装成资源对象，并添加集合中
             Resource resource = new Resource();
-            resource.setType(1)
-                    .setPath(path)
-                    .setName(methodAuth.name())
-                    .setId(moduleAuth.id() + methodAuth.id());
+            resource.setType(1);
+            resource.setPath(path);
+            resource.setName(methodAuth.name());
+            resource.setId(moduleAuth.id() + methodAuth.id());
             list.add(resource);
         });
         return list;
@@ -74,11 +73,9 @@ public class ApplicationStartup implements ApplicationRunner {
         // 先删除所有操作权限类型的权限资源，待会再新增资源，以实现全量更新
         resourceService.deleteResourceByType(1);
         // 如果权限资源为空，就不用走后续数据插入步骤
-        if (Collections.isEmpty(list)) {
+        if (CollectionUtils.isEmpty(list)) {
             return;
         }
-        // 将权限资源给放到权限缓存里
-        MySecurityMetadataSource.getRESOURCES().addAll(list);
         // 将资源数据批量添加到数据库
         resourceService.insertResources(list);
     }

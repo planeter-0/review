@@ -5,15 +5,19 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
- * 资源
+ * Url资源
  */
 @Data
 @Entity
-@Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
-public class Resource extends BaseEntity{
+public class Resource {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     /**
      * 路径
      */
@@ -26,4 +30,5 @@ public class Resource extends BaseEntity{
      * 类型。0为控制器，1为接口
      */
     private Integer type;
+
 }

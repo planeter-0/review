@@ -13,7 +13,6 @@ import javax.validation.constraints.NotBlank;
 public class LoginParam {
     @Email
     private String username;
-
     @NotBlank(message = "密码不能为空")
     @Length(min = 6, max = 12, message = "密码长度为6-12位")
     private String password;

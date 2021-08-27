@@ -1,10 +1,16 @@
 package com.planeter.review.service;
 
+import com.planeter.review.model.entity.UserEntity;
 import com.planeter.review.model.param.LoginParam;
 import com.planeter.review.model.param.RegisterParam;
-import com.planeter.review.model.vo.UserVO;
 
 public interface UserService {
-    UserVO login(LoginParam user);
-    void register(RegisterParam param);
+    void verifyEmail(String email);
+
+    /**
+     * 注册
+     * @param param
+     * @return 用户id
+     */
+    Long register(RegisterParam param);
 }

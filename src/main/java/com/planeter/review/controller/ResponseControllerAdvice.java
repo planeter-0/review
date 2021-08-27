@@ -29,6 +29,7 @@ public class ResponseControllerAdvice implements ResponseBodyAdvice<Object> {
         // String类型不能直接包装,进行处理
         if (returnType.getGenericParameterType().equals(String.class)) {
             ObjectMapper objectMapper = new ObjectMapper();
+            System.out.println(mediaType.getType());
             try {
                 // 将数据包装在ResultVO里后，再转换为json字符串响应给前端
                 return objectMapper.writeValueAsString(new ResultVO<>(data));
@@ -36,7 +37,7 @@ public class ResponseControllerAdvice implements ResponseBodyAdvice<Object> {
                 throw new ApiException("返回String类型错误");
             }
         }
-        // 将原本的数据包装在ResultVO
+        // 非String将原本的数据包装在ResultVO
         return new ResultVO<>(data);
     }
 }
