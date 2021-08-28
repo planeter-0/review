@@ -2,7 +2,6 @@ package com.planeter.review.common.security;
 
 
 import com.planeter.review.model.entity.UserEntity;
-import com.planeter.review.service.UserService;
 import com.planeter.review.utils.JwtUtils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -13,14 +12,10 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -32,16 +27,13 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author Planeter
- * @description: TODO
- * @date 2021/5/1 14:23
- * @status dev
+ * Jwt认证过滤器
  */
 @Slf4j
 public class JwtAuthFilter extends AuthenticatingFilter {
     // token更新时间.单位秒
+    //TODO 软编码 SecurityProperties.java
     private static final int tokenRefreshInterval = 3000;
-
 
     /**
      * 父第一个被调用的方法
@@ -85,7 +77,7 @@ public class JwtAuthFilter extends AuthenticatingFilter {
         httpResponse.setCharacterEncoding("UTF-8");
         httpResponse.setContentType("application/json;charset=UTF-8");
         httpResponse.setStatus(HttpStatus.NON_AUTHORITATIVE_INFORMATION.value());
-        httpResponse.sendError(203,"认证错误");
+        httpResponse.sendError(203, "认证错误");
         return false;
     }
 
@@ -105,9 +97,9 @@ public class JwtAuthFilter extends AuthenticatingFilter {
             assert date != null;
             // 更新token
             if (shouldTokenRefresh(date)) {
-                newToken = JwtUtils.sign(user.getUsername(),3000);
+                newToken = JwtUtils.sign(user.getUsername(), 3000);
                 BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
-                RedisTemplate<String,Object> redisTemplate = (RedisTemplate<String,Object>) factory.getBean("redisTemplate");
+                RedisTemplate<String, Object> redisTemplate = (RedisTemplate<String, Object>) factory.getBean("redisTemplate");
                 redisTemplate.opsForValue().set("Jwt-" + user.getUsername(), newToken, 9000, TimeUnit.SECONDS);
             }
         }

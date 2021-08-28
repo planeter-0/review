@@ -4,11 +4,13 @@ package com.planeter.review.model.vo;
 import com.planeter.review.common.enums.ResultCode;
 import lombok.Getter;
 
+import java.io.Serializable;
+
 /**
- * 自定义统一响应体,
+ * 自定义统一响应体
  */
 @Getter
-public class ResultVO<T> {
+public class ResultVO<T> implements Serializable {
     /**
      * 状态码, 默认1000是成功
      */

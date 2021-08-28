@@ -9,8 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
 
@@ -21,6 +19,7 @@ import java.io.UnsupportedEncodingException;
  */
 @Slf4j
 public class JwtCredentialsMatcher implements CredentialsMatcher {
+    //TODO 软编码 SecurityProperties.java
     private String salt = "HelloWorld";
     @Override
     public boolean doCredentialsMatch(AuthenticationToken authenticationToken, AuthenticationInfo authenticationInfo) {

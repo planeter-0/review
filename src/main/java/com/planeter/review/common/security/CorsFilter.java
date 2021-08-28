@@ -1,14 +1,11 @@
 package com.planeter.review.common.security;
 
 
-import org.springframework.stereotype.Component;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Component
 public class CorsFilter implements Filter {
 
     @Override
@@ -24,7 +21,7 @@ public class CorsFilter implements Filter {
         httpResponse.setHeader("Access-Control-Allow-Methods", "*");
         httpResponse.setHeader("Access-Control-Max-Age", "3600");
         httpResponse.setHeader("Access-Control-Allow-Headers", httpRequest.getHeader("Access-Control-Request-Headers"));
-        httpResponse.setHeader("Access-Control-Expose-Headers","Authorization");
+        httpResponse.setHeader("Access-Control-Expose-Headers", "Authorization");
         httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
         if (httpRequest.getMethod().equals("OPTIONS")) {
             httpResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
@@ -33,6 +30,7 @@ public class CorsFilter implements Filter {
     }
 
     @Override
-    public void destroy() {}
+    public void destroy() {
+    }
 }
 

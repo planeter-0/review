@@ -11,6 +11,7 @@ import javax.persistence.Id;
 
 /**
  * Url资源
+ * MySQL
  */
 @Data
 @Entity

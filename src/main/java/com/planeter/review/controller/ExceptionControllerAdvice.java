@@ -4,8 +4,6 @@ import com.planeter.review.common.enums.ResultCode;
 import com.planeter.review.common.exception.ApiException;
 import com.planeter.review.model.vo.ResultVO;
 import org.apache.shiro.ShiroException;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

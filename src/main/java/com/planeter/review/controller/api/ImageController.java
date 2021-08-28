@@ -13,12 +13,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Objects;
 
-/**
- * @author Planeter
- * @description: ImageController
- * @date 2021/6/11 16:45
- * @status dev
- */
 @RestController
 @Slf4j
 public class ImageController {

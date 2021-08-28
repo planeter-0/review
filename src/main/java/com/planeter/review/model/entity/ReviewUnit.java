@@ -7,11 +7,16 @@ import org.bson.Document;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 复习单元
+ * MongoDB
+ */
 @Data
 @org.springframework.data.mongodb.core.mapping.Document(collection="unit")
-public class ReviewUnit {
+public class ReviewUnit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;

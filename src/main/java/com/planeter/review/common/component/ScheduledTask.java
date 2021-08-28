@@ -14,7 +14,7 @@ public class ScheduledTask {
     /**
      * 每月初清空计数板
      */
-    @Scheduled(cron = "0 0 0 1 * ? *")// 每月1日0点
+    @Scheduled(cron = "0 0 0 1 * ?")// 每月1日0点
     public void clearBoards() {
         scoreBoardService.clearBoard();
     }

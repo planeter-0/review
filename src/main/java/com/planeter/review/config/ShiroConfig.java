@@ -26,12 +26,6 @@ import javax.servlet.Filter;
 import java.util.Arrays;
 import java.util.Map;
 
-/**
- * @description: ShiroConfig
- * @author Planeter
- * @date 2021/5/15 0:43
- * @status dev
- */
 @Configuration
 public class ShiroConfig {
 
@@ -59,7 +53,7 @@ public class ShiroConfig {
     }
 
     /**
-     * session
+     * 禁用session
      */
     @Bean
     protected SessionStorageEvaluator sessionStorageEvaluator() {
@@ -86,7 +80,7 @@ public class ShiroConfig {
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
         factoryBean.setSecurityManager(securityManager);
         Map<String, Filter> filterMap = factoryBean.getFilters();
-        filterMap.put("cors",new CorsFilter());
+        filterMap.put("cors", new CorsFilter());
         filterMap.put("jwt", new JwtAuthFilter());
         factoryBean.setFilters(filterMap);
         factoryBean.setFilterChainDefinitionMap(shiroFilterChainDefinition().getFilterChainMap());
@@ -110,11 +104,12 @@ public class ShiroConfig {
 //        c.addPathDefinition("/image/**","anon,cors");
 //        //Jwt
         //Close Jwt in order to reduce the front-end work :)
-        c.addPathDefinition("/register/**","anon,cors");
-        c.addPathDefinition("/login","anon,cors");
-        c.addPathDefinition("/**","jwt,cors");
+        c.addPathDefinition("/register/**", "anon,cors");
+        c.addPathDefinition("/login", "anon,cors");
+        c.addPathDefinition("/**", "jwt,cors");
         return c;
     }
+
     /**
      * setUsePrefix(false)用于解决一个奇怪的bug。在引入spring aop的情况下。
      * 在@Controller注解的类的方法中加入@RequiresRole等shiro注解，会导致该方法无法映射请求，

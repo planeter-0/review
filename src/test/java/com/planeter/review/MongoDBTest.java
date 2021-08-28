@@ -23,25 +23,29 @@ import java.util.List;
 public class MongoDBTest {
     @Resource
     public MongoTemplate mongoTemplate;
-    public static List<Document> getDocumentsFromJsonFile(File file) {
-        //逐行转换
-        List<Document> observationDocuments = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(file.getPath()));) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                observationDocuments.add(Document.parse(line));
-            }
-        } catch (IOException ex) {
-            ex.getMessage();
-        }
-        return observationDocuments;
-    }
     @Test
-    void insertDict(){
-        List<Document> cet4 = getDocumentsFromJsonFile(new File("./src/main/resources/static/CET4_3.json"));
-        mongoTemplate.getCollection("word").insertMany(cet4);
-        List<Document> cet6 = getDocumentsFromJsonFile(new File("./src/main/resources/static/CET6_3.json"));
-        mongoTemplate.getCollection("word").insertMany(cet6);
+    void initializeBloomFilter(){
+
     }
+//    public static List<Document> getDocumentsFromJsonFile(File file) {
+//        //逐行转换
+//        List<Document> observationDocuments = new ArrayList<>();
+//        try (BufferedReader br = new BufferedReader(new FileReader(file.getPath()));) {
+//            String line;
+//            while ((line = br.readLine()) != null) {
+//                observationDocuments.add(Document.parse(line));
+//            }
+//        } catch (IOException ex) {
+//            ex.getMessage();
+//        }
+//        return observationDocuments;
+//    }
+//    @Test
+//    void insertDict(){
+//        List<Document> cet4 = getDocumentsFromJsonFile(new File("./src/main/resources/static/CET4_3.json"));
+//        mongoTemplate.getCollection("word").insertMany(cet4);
+//        List<Document> cet6 = getDocumentsFromJsonFile(new File("./src/main/resources/static/CET6_3.json"));
+//        mongoTemplate.getCollection("word").insertMany(cet6);
+//    }
 
 }

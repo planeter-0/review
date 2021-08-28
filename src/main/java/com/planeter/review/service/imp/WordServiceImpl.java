@@ -27,7 +27,6 @@ public class WordServiceImpl implements WordService {
     MongoTemplate mongoTemplate;
 
     @Override
-    @CachePut(value = {"WordGroup"}, key = "#groupId")
     public WordGroup createGroup(Long userId, String bookId, Integer total) {
         WordGroup group = new WordGroup(userId,bookId);
         group.generateOrder(total);
@@ -49,7 +48,6 @@ public class WordServiceImpl implements WordService {
     }
 
     @Override
-    @CachePut(value = {"WordGroup"}, key = "#groupId")
     public void updateGroup(Integer start, String groupId,List<Integer> breaks,List<String> unitIds) {
         Query query = new Query(Criteria.where("_id").is(groupId));
         Update update = new Update();

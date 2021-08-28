@@ -6,13 +6,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * 词书基本信息, 存储于MySQL
  */
 @Data
 @Entity
-public class WordBook {
+public class WordBook implements Serializable {
     /**
      * 词书id
      */

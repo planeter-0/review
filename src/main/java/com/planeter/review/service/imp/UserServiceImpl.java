@@ -5,6 +5,7 @@ import com.planeter.review.common.exception.ApiException;
 import com.planeter.review.model.entity.UserEntity;
 import com.planeter.review.model.param.LoginParam;
 import com.planeter.review.model.param.RegisterParam;
+import com.planeter.review.model.vo.UserVO;
 import com.planeter.review.repository.UserRepository;
 import com.planeter.review.service.UserService;
 import com.planeter.review.utils.JwtUtils;
@@ -14,13 +15,17 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -35,7 +40,6 @@ public class UserServiceImpl implements UserService {
     @Resource
     JavaMailSender javaMailSender;
 
-
     @Override
     public void verifyEmail(String email) {
         if (!email.matches("^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$"))
@@ -49,13 +53,14 @@ public class UserServiceImpl implements UserService {
         }
         // 生成邮件
         String code = sb.toString();
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("Memory Booster");
-        message.setTo(email);
-        message.setSubject("Memory Booster 注册邮箱验证");
-        message.setText("验证码:" + code);
         // 发送邮件
         try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper messageHelper = new MimeMessageHelper(message,true,"utf-8");
+            messageHelper.setFrom("planeter@126.com","Memory Booster");
+            messageHelper.setTo(email);
+            messageHelper.setSubject("Memory Booster注册邮箱验证");
+            messageHelper.setText("验证码:" + code+", 五分钟后失效");
             javaMailSender.send(message);
             log.info("Send success!");
             // 将验证码存入Redis, 5min后失效
@@ -76,4 +81,23 @@ public class UserServiceImpl implements UserService {
         user.setPassword(BCrypt.hashpw(param.getPassword(), BCrypt.gensalt()));
         return userRepository.save(user).getId();
     }
+
+    @Override
+    @CachePut(value = {"User"}, key = "#user.username")
+    public UserEntity update(UserVO user) {
+        UserEntity userEntity = (UserEntity) SecurityUtils.getSubject().getPrincipal();
+        if(user.getPassword()!=null)
+            userEntity.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+        if(user.getNickname()!=null)
+            userEntity.setNickname(user.getNickname());
+        if(user.getIcon()!=null)
+            userEntity.setIcon(user.getIcon());
+        return userRepository.save(userEntity);
+    }
+    @Override
+    @Cacheable(value = {"User"}, key = "#username")
+    public UserEntity getByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
 }

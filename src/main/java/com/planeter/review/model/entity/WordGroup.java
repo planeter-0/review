@@ -7,19 +7,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * @author Planeter
- * @description: TODO
- * @date 2021/8/10 23:05
- * @status dev
+ * 词书背诵计划
+ * MongoDB
  */
 @Data
 @org.springframework.data.mongodb.core.mapping.Document(collection="wordGroup")
-public class WordGroup {
+public class WordGroup implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;

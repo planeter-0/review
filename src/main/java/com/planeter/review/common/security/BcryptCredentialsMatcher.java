@@ -7,10 +7,7 @@ import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.mindrot.jbcrypt.BCrypt;
 
 /**
- * @author Planeter
- * @description: TODO
- * @date 2021/4/30 11:01
- * @status dev
+ * UsernamePasswordToken凭证匹配器
  */
 public class BcryptCredentialsMatcher implements CredentialsMatcher {
     @Override

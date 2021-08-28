@@ -26,6 +26,7 @@ import java.util.UUID;
  */
 @Slf4j
 public class QiniuUtils {
+    //TODO 软编码 QiniuProperties.java
     /**
      * 生成上传凭证，然后准备上传
      */

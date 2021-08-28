@@ -7,10 +7,8 @@ import java.io.Serializable;
 
 
 /**
- * @author Planeter
- * @description: TODO
- * @date 2021/8/10 22:35
- * @status dev
+ * 单词
+ * MongoDB
  */
 @Data
 @org.springframework.data.mongodb.core.mapping.Document(collection="word")

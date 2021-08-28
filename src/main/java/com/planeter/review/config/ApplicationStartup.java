@@ -22,6 +22,7 @@ import java.util.Set;
 /**
  * 接口扫描
  */
+//TODO 权限系统
 @Component
 public class ApplicationStartup implements ApplicationRunner {
     @Autowired

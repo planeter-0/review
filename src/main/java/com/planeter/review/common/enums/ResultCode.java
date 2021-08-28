@@ -3,7 +3,7 @@ package com.planeter.review.common.enums;
 import lombok.Getter;
 
 /**
- * @description 响应码枚举
+ * 响应码枚举
  */
 @Getter
 public enum ResultCode {

@@ -8,10 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 /**
- * @author Planeter
- * @description: TODO
- * @date 2021/8/4 15:49
- * @status dev
+ * 注册参数
  */
 @Data
 public class RegisterParam {

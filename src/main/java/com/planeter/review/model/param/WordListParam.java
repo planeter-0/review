@@ -5,10 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @author Planeter
- * @description: TODO
- * @date 2021/8/23 6:19
- * @status dev
+ * 获取单词列表参数
  */
 @Data
 public class WordListParam {

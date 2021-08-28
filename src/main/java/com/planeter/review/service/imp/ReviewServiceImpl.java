@@ -3,9 +3,11 @@ package com.planeter.review.service.imp;
 import com.planeter.review.model.entity.ReviewUnit;
 import com.planeter.review.service.ReviewService;
 import com.planeter.review.service.ScoreBoardService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.aspectj.AbstractCacheAspect;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -21,14 +23,16 @@ import java.util.List;
  * @date 2021/8/17 9:26
  * @status dev
  */
+@Slf4j
 @Service
 public class ReviewServiceImpl implements ReviewService {
     @Resource
     MongoTemplate mongoTemplate;
 
     @Override
-    @CachePut(value = {"unit"}, key = "#id")
+    @CachePut(value = {"unit"}, key = "#reviewUnit.id")
     public ReviewUnit createUnit(ReviewUnit reviewUnit) {
+        log.info("createUnit: "+reviewUnit.getId());
         return mongoTemplate.insert(reviewUnit,"unit");
     }
 
