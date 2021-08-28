@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -20,7 +21,7 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public Set<Long> getIdsByUserId(Long userId) {
-        return resourceRepository.selectIdsByUserId(userId);
+        return (Set<Long>) new ArrayList<Long>();//
     }
 
     @Override
@@ -40,7 +41,6 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public List<Resource> getResourcesByUserId(Long userId) {
-
-        return resourceRepository.getResourcesByUserId(userId);
+        return new ArrayList<Resource>();
     }
 }

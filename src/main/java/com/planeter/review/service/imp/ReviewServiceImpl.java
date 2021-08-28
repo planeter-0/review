@@ -32,7 +32,7 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     @CachePut(value = {"unit"}, key = "#reviewUnit.id")
     public ReviewUnit createUnit(ReviewUnit reviewUnit) {
-        log.info("createUnit: "+reviewUnit.getId());
+        log.info("Create unit");
         return mongoTemplate.insert(reviewUnit,"unit");
     }
 
@@ -62,7 +62,6 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    @Cacheable(value = {"myUnit"}, key = "#userId+'_'+#state")
     public List<ReviewUnit> getByUserIdAndState(Long userId,Integer state) {
         Query query = new Query();
         if(state==-1) {
