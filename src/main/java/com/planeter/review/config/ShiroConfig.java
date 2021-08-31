@@ -106,6 +106,7 @@ public class ShiroConfig {
         //Close Jwt in order to reduce the front-end work :)
         c.addPathDefinition("/register/**", "anon,cors");
         c.addPathDefinition("/login", "anon,cors");
+        c.addPathDefinition("/download/**", "anon,cors");
         c.addPathDefinition("/**", "jwt,cors");
         return c;
     }

@@ -7,6 +7,7 @@ import com.planeter.review.repository.UserRepository;
 import com.planeter.review.repository.WordBookRepository;
 import com.planeter.review.service.ScoreBoardService;
 import org.junit.jupiter.api.Test;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -46,4 +47,12 @@ class ReviewApplicationTests {
 //            bloomFilter.getBloomFilter("WordGroup", 100000, 0.003).add(w.getId());
 //        }
 //    }
+    @Resource
+    UserRepository userRepository;
+    @Test
+    void changePassword() {
+        UserEntity user = userRepository.findByUsername("2060871967@qq.com");
+        user.setPassword(BCrypt.hashpw("123456", BCrypt.gensalt()));
+        userRepository.save(user);
+    }
 }

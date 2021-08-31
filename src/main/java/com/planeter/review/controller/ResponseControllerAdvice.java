@@ -6,7 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.planeter.review.common.exception.ApiException;
 import com.planeter.review.model.vo.ResultVO;
 import org.springframework.core.MethodParameter;
+import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -36,6 +38,9 @@ public class ResponseControllerAdvice implements ResponseBodyAdvice<Object> {
             } catch (JsonProcessingException e) {
                 throw new ApiException("返回String类型错误");
             }
+        }
+        if (mediaType.equalsTypeAndSubtype(MediaType.APPLICATION_OCTET_STREAM)) {
+            return data;
         }
         // 非String将原本的数据包装在ResultVO
         return new ResultVO<>(data);
