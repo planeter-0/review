@@ -54,6 +54,7 @@ spring:
                 dialect: org.hibernate.dialect.MySQL57Dialect
 
     jackson:
+        date-format: yyyy-MM-dd HH:mm:ss
         time-zone: GMT+8
 logging:
     level:
