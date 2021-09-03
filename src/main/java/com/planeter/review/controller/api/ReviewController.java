@@ -11,6 +11,7 @@ import org.bson.Document;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 public class ReviewController {
@@ -28,7 +29,7 @@ public class ReviewController {
     }
 
     @PutMapping("/customUnit/update")
-    public ResultVO updateCustomUnit(@RequestParam String id, @RequestParam String record) {
+    public ResultVO<Object> updateCustomUnit(@RequestParam String id, @RequestParam String record) {
         UserEntity user = (UserEntity) SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal();
         // 检查是否超时并更新计数板
         String rec = record.replaceAll("0", "");
@@ -42,12 +43,13 @@ public class ReviewController {
     }
 
     @GetMapping("/customUnit/{id}")
-    public ResultVO getCustomUnitById(@PathVariable String id) {
-        return new ResultVO<>(reviewService.getById(id));
+    public ResultVO<ReviewUnit> getCustomUnitById(@PathVariable String id) {
+        ReviewUnit r =reviewService.getById(id);
+        return new ResultVO<>(r);
     }
 
     @GetMapping("/customUnit/mine")
-    public ResultVO getMyCustomUnit(@RequestParam(defaultValue = "-1") Integer state) {
+    public ResultVO<List<ReviewUnit>> getMyCustomUnit(@RequestParam(defaultValue = "-1") Integer state) {
         UserEntity user = (UserEntity) SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal();
         return new ResultVO<>(reviewService.getByUserIdAndState(user.getId(), state));
     }

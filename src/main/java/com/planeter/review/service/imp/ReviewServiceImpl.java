@@ -1,5 +1,6 @@
 package com.planeter.review.service.imp;
 
+import com.planeter.review.common.annotation.Cache;
 import com.planeter.review.model.entity.ReviewUnit;
 import com.planeter.review.service.ReviewService;
 import com.planeter.review.service.ScoreBoardService;
@@ -55,7 +56,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    @Cacheable(value = {"unit"}, key = "#id")
+    @Cacheable(value = "unit", key = "#id")
     public ReviewUnit getById(String id) {
         Query query = new Query(Criteria.where("_id").is(id));
         return mongoTemplate.findOne(query,ReviewUnit.class);
