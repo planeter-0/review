@@ -2,6 +2,7 @@ package com.planeter.review.common.aspect;
 
 
 import com.planeter.review.common.annotation.Cache;
+import com.planeter.review.common.exception.ApiException;
 import com.planeter.review.service.CacheService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -66,7 +67,7 @@ public class CacheAspect {
             String key = expression.getValue(context).toString();
 
             // 尝试从取缓存
-            data = cacheService.cacheGet(value+':'+key,method.getReturnType());
+            data = cacheService.cacheGet(value+"::"+key,method.getReturnType());
             // 无缓存
             if (data == null) {
                 // 加同步锁,避免缓存击穿时，大量请求访问数据库
@@ -75,18 +76,21 @@ public class CacheAspect {
                     data = joinPoint.proceed();
                     // 库中没有此数据，存入一个过期时间为1分钟的空对象,防止穿透
                     if (data == null) {
-                        cacheService.cachePut(value+':'+key, "", 1);
+                        cacheService.cachePut(value+"::"+key, "", 4);
                     } else {
                         // 将数据写入缓存，并设置一个随机的过期时间，避免缓存雪崩问题
                         Random random = new Random();
-                        cacheService.cachePut(value+':'+key, "", (random.nextInt(2) + 1)*60);
+                        cacheService.cachePut(value+"::"+key, data, (random.nextInt(2) + 1)*60);
                     }
                 }
             }
         } catch (Throwable e) {
             e.printStackTrace();
         }
-        // 有缓存直接返回缓存
-        return data;
+        // 有缓存直接返回缓存,空值对象返回null防止类型转换错误
+        if(data.equals(""))
+            return null;
+        else
+            return data;
     }
 }

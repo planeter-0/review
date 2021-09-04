@@ -1,7 +1,6 @@
 package com.planeter.review.service.imp;
 
 import com.planeter.review.service.CacheService;
-import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 

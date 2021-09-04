@@ -36,6 +36,7 @@ public interface WordService {
      * @param groupId
      * @param breaks
      * @param unitIds
+     * @return
      */
-    void updateGroup(Integer start, String groupId,List<Integer> breaks,List<String> unitIds);
+    WordGroup updateGroup(Integer start, String groupId, List<Integer> breaks, List<String> unitIds);
 }

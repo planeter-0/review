@@ -1,6 +1,7 @@
 package com.planeter.review.service.imp;
 
 
+import com.planeter.review.common.annotation.Cache;
 import com.planeter.review.common.exception.ApiException;
 import com.planeter.review.model.entity.UserEntity;
 import com.planeter.review.model.param.LoginParam;
@@ -95,7 +96,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(userEntity);
     }
     @Override
-    @Cacheable(value = {"User"}, key = "#username")
+    @Cache(value = "User", key = "#username")
     public UserEntity getByUsername(String username) {
         return userRepository.findByUsername(username);
     }

@@ -1,5 +1,6 @@
 package com.planeter.review.service.imp;
 
+import com.planeter.review.common.annotation.Cache;
 import com.planeter.review.model.entity.ScoreBoard;
 import com.planeter.review.repository.ScoreBoardRepository;
 import com.planeter.review.service.ScoreBoardService;
@@ -24,7 +25,7 @@ public class ScoreBoardServiceImp implements ScoreBoardService {
     }
 
     @Override
-    @Cacheable(value = {"scoreBoard"}, key = "#userId")
+    @Cache(value = "scoreBoard", key = "#userId")
     public ScoreBoard getScoreBoardByUserId(Long userId) {
         return scoreBoardRepository.getById(userId);
     }

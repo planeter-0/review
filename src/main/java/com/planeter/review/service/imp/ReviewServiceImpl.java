@@ -18,12 +18,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
-/**
- * @author Planeter
- * @description: TODO
- * @date 2021/8/17 9:26
- * @status dev
- */
 @Slf4j
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -56,7 +50,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    @Cacheable(value = "unit", key = "#id")
+    @Cache(value = "unit", key = "#id")
     public ReviewUnit getById(String id) {
         Query query = new Query(Criteria.where("_id").is(id));
         return mongoTemplate.findOne(query,ReviewUnit.class);
