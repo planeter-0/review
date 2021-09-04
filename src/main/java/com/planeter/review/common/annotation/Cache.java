@@ -7,7 +7,6 @@ import java.lang.annotation.Target;
 
 /**
  * 代替Cacheable, 简单应对缓存雪崩穿透和击穿
- * 出现类型转换错误,反序列化问题
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

@@ -2,6 +2,7 @@ package com.planeter.review.common.aspect;
 
 
 import com.planeter.review.common.annotation.Cache;
+import com.planeter.review.service.CacheService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -26,7 +27,6 @@ import java.util.concurrent.TimeUnit;
  * 缓存雪崩之设置随机过期时间
  * 缓存穿透之缓存空值
  * 缓存击穿之加同步锁
- * 反序列化存在类型转换问题
  */
 @Slf4j
 @Component
@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
 public class CacheAspect {
 
     @Resource
-    private RedisTemplate<String, Object> redisTemplate;
+    private CacheService cacheService;
 
     @Pointcut("@annotation(com.planeter.review.common.annotation.Cache)")
     public void cachePointcut() {
@@ -66,7 +66,7 @@ public class CacheAspect {
             String key = expression.getValue(context).toString();
 
             // 尝试从取缓存
-            data = redisTemplate.opsForValue().get(value+':'+key);
+            data = cacheService.cacheGet(value+':'+key,method.getReturnType());
             // 无缓存
             if (data == null) {
                 // 加同步锁,避免缓存击穿时，大量请求访问数据库
@@ -75,11 +75,11 @@ public class CacheAspect {
                     data = joinPoint.proceed();
                     // 库中没有此数据，存入一个过期时间为1分钟的空对象,防止穿透
                     if (data == null) {
-                        redisTemplate.opsForValue().set(value+':'+key, "", 1, TimeUnit.MINUTES);
+                        cacheService.cachePut(value+':'+key, "", 1);
                     } else {
                         // 将数据写入缓存，并设置一个随机的过期时间，避免缓存雪崩问题
                         Random random = new Random();
-                        redisTemplate.opsForValue().set(value+':'+key, "", random.nextInt(2) + 1, TimeUnit.HOURS);
+                        cacheService.cachePut(value+':'+key, "", (random.nextInt(2) + 1)*60);
                     }
                 }
             }
